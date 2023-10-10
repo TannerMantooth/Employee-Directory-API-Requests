@@ -81,16 +81,16 @@ function formatBirthday(user) {
     return `${month}/${day}/${year}`;
 }
 
-/*Checks cell for correct number of digits and puts number in correct format.
-Returns message on modal for card if cell number had incorrect amount of digits */
+//Checks cell for correct number of digits and puts number in correct format if possible
+
 function formatCell(user) {
-    const cell = user.cell;
-    const cleaned = ('' + cell).replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    let cell = user.cell;
+    cell = cell.replace(/[^\d]/g, '');
+    
+    if (cell.length === 10) {
+        return cell.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
       }
-    return 'No cell phone number available';
+    return cell;
 }
 
 //Adds function to modal exit button
